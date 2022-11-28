@@ -22,7 +22,7 @@ class TaskRepository extends RootRepository<TaskAction, List<Task>> {
         _tasks.remove(task.id);
         Notification.showAction(
           'Task was deleted! Tap to UnDo.',
-          () {
+          (_, __) { // todo: you can use global context or `BLoI` instance
             _tasks[task.id] = task;
             updateData(_values);
           },
@@ -34,9 +34,13 @@ class TaskRepository extends RootRepository<TaskAction, List<Task>> {
   }
 
   Future<List<Task>> _add(AddTask action) async {
-    updateStatus<TaskRepository>(InProgress());
 
-    await Future.delayed(const Duration(seconds: 3));
+    // just for a demo
+    for (int i in [5,4,3,2,1]) {
+      updateStatus<TaskRepository>(InProgress(i));
+      await Future.delayed(const Duration(milliseconds: 600));
+    }
+
     final task = Task.create(title: action.title);
     _tasks[task.id] = task;
 

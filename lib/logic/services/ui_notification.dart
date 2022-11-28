@@ -1,7 +1,14 @@
+import 'package:new_approach/logic/index.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:flutter/material.dart';
 
 class Notification {
+  static BLoI? _logic;
+
+  static void setBLoI(BLoI bLoI) {
+    _logic = bLoI;
+  }
+
   static void showError(e) => showSimpleNotification(
         Text(e.toString()),
         background: Colors.redAccent,
@@ -16,9 +23,10 @@ class Notification {
         duration: const Duration(seconds: 3),
       );
 
-  static void showAction(String message, VoidCallback onTap) =>
+  static void showAction(
+          String message, Function(BuildContext context, BLoI? logic) onTap) =>
       showOverlayNotification(
-        (_) => Material(
+        (context) => Material(
           color: Colors.orange,
           child: SafeArea(
             top: false,
@@ -29,7 +37,7 @@ class Notification {
               iconColor: Colors.black,
               child: ListTile(
                 title: Text(message),
-                onTap: onTap,
+                onTap: () => onTap(context, _logic),
               ),
             ),
           ),

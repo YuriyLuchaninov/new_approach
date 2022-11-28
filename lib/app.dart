@@ -12,14 +12,14 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final logic = BLoI();
+  final logic = LogicInterface();
   final taskRepository = TaskRepository();
 
   @override
   void dispose() async {
     await Future.wait([
       taskRepository.dispose(),
-      // todo add other repositories
+      // todo: at this point, you need to add other data repositories
     ]).catchError((e) {
       debugPrint(e);
     });

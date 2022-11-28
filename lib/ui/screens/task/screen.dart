@@ -44,7 +44,13 @@ class TaskListScreen extends StatelessWidget {
         builder: (context, status) => FloatingActionButton(
           onPressed: status is InProgress ? null : () => addDialog(context),
           child: status is InProgress
-              ? const CircularProgressIndicator(color: Colors.white)
+              ? Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    const CircularProgressIndicator(color: Colors.white),
+                    Center(child: Text('${status.progress}')),
+                  ],
+                )
               : const Icon(Icons.add),
         ),
       ),

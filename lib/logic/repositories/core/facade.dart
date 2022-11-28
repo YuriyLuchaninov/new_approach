@@ -3,7 +3,7 @@ import 'channel.dart';
 import 'status.dart';
 
 // Business Logic Interface
-class BLoI {
+abstract class BLoI {
   BLoI() {
     Status.clear();
   }
