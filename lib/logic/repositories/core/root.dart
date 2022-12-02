@@ -33,6 +33,9 @@ abstract class RootRepository<T, K> {
   @protected
   K get data => _core.value;
 
+  @protected
+  get send => CommandChannel.send;
+
   Future<dynamic> dispose() =>
       _subscription.cancel().then((_) => _core.close());
 }

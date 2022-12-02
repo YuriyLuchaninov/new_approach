@@ -10,6 +10,7 @@ class TaskRepository extends RootRepository<TaskAction, List<Task>> {
 
   @override
   Future<List<Task>> onEvent(action) async {
+    // todo you can use `send` for trigger new action to any repository
     switch (action.runtimeType) {
       case AddTask:
         return _add(action as AddTask);
@@ -22,7 +23,7 @@ class TaskRepository extends RootRepository<TaskAction, List<Task>> {
         _tasks.remove(task.id);
         Notification.showAction(
           'Task was deleted! Tap to UnDo.',
-          (_, __) { // todo: you can use global context or `BLoI` instance
+          () {
             _tasks[task.id] = task;
             updateData(_values);
           },
@@ -34,9 +35,8 @@ class TaskRepository extends RootRepository<TaskAction, List<Task>> {
   }
 
   Future<List<Task>> _add(AddTask action) async {
-
     // just for a demo
-    for (int i in [5,4,3,2,1]) {
+    for (int i in [5, 4, 3, 2, 1]) {
       updateStatus<TaskRepository>(InProgress(i));
       await Future.delayed(const Duration(milliseconds: 600));
     }
