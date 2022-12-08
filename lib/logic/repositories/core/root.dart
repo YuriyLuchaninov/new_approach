@@ -9,20 +9,18 @@ abstract class RootRepository<T, K> {
     _subscription = CommandChannel.channel
         .where((action) => action is T)
         .listen((action) async {
-      final data = await onEvent(action as T);
-      if (data != null) {
-        _core.add(data);
-      }
+      final data = await onAction(action as T);
+      _core.add(data);
     });
   }
 
-  final _core = BehaviorSubject<K>();
+  final _core = BehaviorSubject<K?>();
   late final StreamSubscription _subscription;
 
-  Stream<K> get stream => _core.stream;
+  Stream<K?> get stream => _core.stream;
 
   @protected
-  Future<K?> onEvent(T action);
+  Future<K?> onAction(T action);
 
   @protected
   void updateData(K data) => _core.add(data);
@@ -31,7 +29,7 @@ abstract class RootRepository<T, K> {
   void updateStatus<Q>(Object status) => Status.update<Q>(status);
 
   @protected
-  K get data => _core.value;
+  K? get data => _core.value;
 
   @protected
   get send => CommandChannel.send;

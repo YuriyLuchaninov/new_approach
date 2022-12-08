@@ -32,7 +32,7 @@ class _AppState extends State<App> {
     return MultiProvider(
       providers: [
         Provider<BLoI>(create: (_) => logic),
-        StreamProvider<List<Task>>.value(
+        StreamProvider<List<Task>?>.value(
           value: taskRepository.stream,
           initialData: const <Task>[],
         ),

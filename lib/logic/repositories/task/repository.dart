@@ -9,7 +9,7 @@ class TaskRepository extends RootRepository<TaskAction, List<Task>> {
   List<Task> get _values => _tasks.values.toList();
 
   @override
-  Future<List<Task>> onEvent(action) async {
+  Future<List<Task>> onAction(action) async {
     // todo you can use `send` for trigger new action to any repository
     switch (action.runtimeType) {
       case AddTask:
